@@ -17,6 +17,7 @@ type UsersService interface {
 	GetUsers(ctx context.Context, limit *int, offset *int) ([]domain.User, error)
 	GetUser(ctx context.Context, id int) (domain.User, error)
 	DeleteUser(ctx context.Context, id int) error
+	PatchUser(ctx context.Context, id int, patch domain.UserPatch) (domain.User, error)
 }
 
 func NewUsersHTTPHandler(userService UsersService) *UsersHTTPHandler {
@@ -44,11 +45,17 @@ func (h *UsersHTTPHandler) Routes() []core_http_server.Route {
 			Path:    "/users/{id}",
 			Handler: h.GetUser,
 		},
-		
+
 		{
-			Method: http.MethodDelete,
-			Path: "/users/{id}",
+			Method:  http.MethodDelete,
+			Path:    "/users/{id}",
 			Handler: h.DeleteUser,
+		},
+
+		{
+			Method:  http.MethodPatch,
+			Path:    "/users/{id}",
+			Handler: h.PatchUser,
 		},
 	}
 }
