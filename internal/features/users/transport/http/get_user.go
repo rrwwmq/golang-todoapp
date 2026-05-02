@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	core_logger "github.com/rrwwmq/golang-todoapp/internal/core/logger"
+	core_http_request "github.com/rrwwmq/golang-todoapp/internal/core/transport/http/request"
 	core_http_response "github.com/rrwwmq/golang-todoapp/internal/core/transport/http/response"
-	core_transport_http_utils "github.com/rrwwmq/golang-todoapp/internal/core/transport/http/utils"
 )
 
 type GetUserReposnse UserDTOResponse
@@ -15,7 +15,7 @@ func (h *UsersHTTPHandler) GetUser(rw http.ResponseWriter, r *http.Request) {
 	log := core_logger.FromContext(ctx)
 	responseHandler := core_http_response.NewHTTPResponseHandler(log, rw)
 
-	userID, err := core_transport_http_utils.GetIntPathValue(r, "id")
+	userID, err := core_http_request.GetIntPathValue(r, "id")
 	if err != nil {
 		responseHandler.ErrorResponse(err, "failed to get userID path value")
 		return

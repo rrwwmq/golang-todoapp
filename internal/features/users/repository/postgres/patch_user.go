@@ -25,7 +25,7 @@ func (r *UsersRepository) PatchUser(ctx context.Context, id int, user domain.Use
 		id,
 		version,
 		full_name,
-		phone_number
+		phone_number;
 	`
 
 	row := r.pool.QueryRow(ctx, query, user.FullName, user.PhoneNumber, id, user.Version)
